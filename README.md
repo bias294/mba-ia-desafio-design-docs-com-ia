@@ -24,7 +24,7 @@ O resultado é documental: PRD, RFC, FDD, 7 ADRs e um Tracker que liga cada item
 
 ## Prompts customizados
 
-**Prompt 1 — extração dirigida, em vez de "gere um PRD":**
+**Prompt 1: extração dirigida, em vez de "gere um PRD":**
 
 ```text
 Leia TRANSCRICAO.md inteira. Produza quatro listas, cada item com [hh:mm] Nome:
@@ -36,7 +36,7 @@ Não inclua nada que não tenha fala correspondente. Se uma regra for necessári
 mas ninguém a disse, coloque na lista 4, não nas outras.
 ```
 
-**Prompt 2 — ancoragem no código para a seção de integração do FDD:**
+**Prompt 2: ancoragem no código para a seção de integração do FDD:**
 
 ```text
 Para cada ponto de integração citado na reunião (changeStatus, classes de erro,
@@ -46,7 +46,7 @@ Só use caminhos que existam no repositório; caminhos que a feature vai criar
 devem ser marcados como "novo".
 ```
 
-**Prompt 3 — verificação anti-alucinação:**
+**Prompt 3: verificação anti-alucinação:**
 
 ```text
 Para cada linha do TRACKER.md, confira se o timestamp e o nome existem em
@@ -62,6 +62,7 @@ Foram **2 ciclos principais**: geração dos documentos e uma revisão com verif
 - **Requisitos sem fala de origem.** O primeiro rascunho do PRD citava "time de suporte" como público; ninguém falou isso na reunião. Removi. Pelo mesmo motivo `WEBHOOK_SECRET_REQUIRED` ficou fora da matriz de erros: foi citado como exemplo, mas sem dizer quando ocorre.
 - **Observabilidade sem base na reunião.** A transcrição só fixa o Pino existente. Métricas e tracing do FDD foram escritos como derivados desse princípio (logs estruturados e correlação por `requestId`/`eventId`), sem inventar ferramenta nova.
 - **Lacunas do próprio desenho.** Ao escrever o FDD, apareceu o caso de um evento preso em `PROCESSING` se o worker cair, e o comportamento do envio durante o grace period de 24 h (quantas assinaturas enviar). Ambos foram para as Questões em Aberto do RFC.
+- **PRD refeito no modelo de entrevista.** O primeiro PRD tinha as seções do enunciado, mas não seguia o esqueleto do prompt de PRD do curso. Reescrevi no formato exato do modelo (requisitos com fluxo, erros e prioridade; riscos com contingência; decisões com trade-off). O que a reunião não definiu, como prioridades e uptime, ficou marcado como proposta ou hipótese. Depois padronizei os demais documentos com as mesmas regras de estilo (sem travessão, itens sem fonte sinalizados).
 - **Caminhos de arquivo que não existem ainda.** A verificação acusou `src/worker.ts` e `src/modules/webhooks/` como inexistentes. Eles são criados pela feature; acrescentei a indicação explícita nos documentos para que não pareçam referências inválidas.
 
 ## Como navegar a entrega

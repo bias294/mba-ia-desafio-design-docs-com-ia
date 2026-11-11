@@ -21,18 +21,19 @@ Cada linha liga um item dos documentos à sua origem na transcrição (`TRANSCRI
 | PRD-OOS-04 | docs/PRD.md | Fora de escopo | Arquivamento de eventos entregues (cerca de 30 dias) fora desta feature | TRANSCRICAO | [09:08] Diego |
 | PRD-OOS-05 | docs/PRD.md | Fora de escopo | Ordenação global e múltiplos workers ficam para o futuro | TRANSCRICAO | [09:13] Larissa |
 | PRD-OOS-06 | docs/PRD.md | Fora de escopo | Exactly-once descartado; garantia é at-least-once | TRANSCRICAO | [09:25] Diego |
-| PRD-FR-01 | docs/PRD.md | Requisito Funcional | Cadastro de webhook com secret gerada pela plataforma e devolvida na criação | TRANSCRICAO | [09:31] Marcos |
-| PRD-FR-02 | docs/PRD.md | Requisito Funcional | Lista de status que o webhook quer receber | TRANSCRICAO | [09:33] Marcos |
-| PRD-FR-03 | docs/PRD.md | Requisito Funcional | PATCH para editar e DELETE para remover webhook | TRANSCRICAO | [09:33] Bruno |
-| PRD-FR-04 | docs/PRD.md | Requisito Funcional | GET para listar os webhooks de um customer | TRANSCRICAO | [09:33] Bruno |
-| PRD-FR-05 | docs/PRD.md | Requisito Funcional | Filtro de eventos na inserção da outbox; sem interessados, não insere | TRANSCRICAO | [09:34] Bruno |
-| PRD-FR-06 | docs/PRD.md | Requisito Funcional | Envio de JSON order.status_changed assinado com HMAC-SHA256 | TRANSCRICAO | [09:43] Diego |
-| PRD-FR-07 | docs/PRD.md | Requisito Funcional | 5 tentativas com backoff e DLQ ao esgotar | TRANSCRICAO | [09:17] Larissa |
-| PRD-FR-08 | docs/PRD.md | Requisito Funcional | Histórico das últimas 100 entregas com sucesso/falha, payload, resposta e tempo | TRANSCRICAO | [09:34] Marcos |
-| PRD-FR-09 | docs/PRD.md | Requisito Funcional | Replay manual de DLQ por ADMIN com log de quem executou | TRANSCRICAO | [09:36] Sofia |
-| PRD-FR-10 | docs/PRD.md | Requisito Funcional | Rotação de secret com a anterior válida por 24 h | TRANSCRICAO | [09:21] Sofia |
-| PRD-FR-11 | docs/PRD.md | Requisito Funcional | Headers X-Event-Id, X-Signature, X-Timestamp, Content-Type | TRANSCRICAO | [09:44] Diego |
-| PRD-FR-12 | docs/PRD.md | Requisito Funcional | Cadastro só aceita URL https (validação Zod) | TRANSCRICAO | [09:23] Sofia |
+| PRD-FR-001 | docs/PRD.md | Requisito Funcional | Cadastro de webhook com secret gerada pela plataforma e devolvida na criação | TRANSCRICAO | [09:31] Marcos |
+| PRD-FR-002 | docs/PRD.md | Requisito Funcional | Lista de status que o webhook quer receber | TRANSCRICAO | [09:33] Marcos |
+| PRD-FR-003 | docs/PRD.md | Requisito Funcional | PATCH para editar e DELETE para remover webhook | TRANSCRICAO | [09:33] Bruno |
+| PRD-FR-004 | docs/PRD.md | Requisito Funcional | GET para listar os webhooks de um customer | TRANSCRICAO | [09:33] Bruno |
+| PRD-FR-002-FILTRO | docs/PRD.md | Requisito Funcional | Filtro de eventos na inserção da outbox; sem interessados, não insere | TRANSCRICAO | [09:34] Bruno |
+| PRD-FR-005 | docs/PRD.md | Requisito Funcional | Evento gravado na outbox na mesma transação da mudança de status; falha desfaz tudo | TRANSCRICAO | [09:40] Bruno |
+| PRD-FR-006 | docs/PRD.md | Requisito Funcional | Envio de JSON order.status_changed assinado com HMAC-SHA256 | TRANSCRICAO | [09:43] Diego |
+| PRD-FR-007 | docs/PRD.md | Requisito Funcional | 5 tentativas com backoff e DLQ ao esgotar | TRANSCRICAO | [09:17] Larissa |
+| PRD-FR-008 | docs/PRD.md | Requisito Funcional | Histórico das últimas 100 entregas com sucesso/falha, payload, resposta e tempo | TRANSCRICAO | [09:34] Marcos |
+| PRD-FR-009 | docs/PRD.md | Requisito Funcional | Replay manual de DLQ por ADMIN com log de quem executou | TRANSCRICAO | [09:36] Sofia |
+| PRD-FR-010 | docs/PRD.md | Requisito Funcional | Rotação de secret com a anterior válida por 24 h | TRANSCRICAO | [09:21] Sofia |
+| PRD-FR-006-HDR | docs/PRD.md | Requisito Funcional | Headers X-Event-Id, X-Signature, X-Timestamp, Content-Type | TRANSCRICAO | [09:44] Diego |
+| PRD-FR-011 | docs/PRD.md | Requisito Funcional | Cadastro só aceita URL https (validação Zod) | TRANSCRICAO | [09:23] Sofia |
 | PRD-NFR-01 | docs/PRD.md | Requisito Não Funcional | Polling de 2 s atende o limite de 10 s | TRANSCRICAO | [09:09] Diego |
 | PRD-NFR-02 | docs/PRD.md | Requisito Não Funcional | Evento gravado na mesma transação do changeStatus | TRANSCRICAO | [09:40] Bruno |
 | PRD-NFR-03 | docs/PRD.md | Requisito Não Funcional | At-least-once com deduplicação pelo cliente | TRANSCRICAO | [09:24] Diego |
@@ -72,6 +73,12 @@ Cada linha liga um item dos documentos à sua origem na transcrição (`TRANSCRI
 | RFC-RISK-01 | docs/RFC.md | Risco | Escrita extra na transação de changeStatus | TRANSCRICAO | [09:41] Bruno |
 | RFC-RISK-02 | docs/RFC.md | Risco | Revisão de segurança de HMAC e geração de secret | TRANSCRICAO | [09:46] Sofia |
 | RFC-RISK-03 | docs/RFC.md | Risco | Perda de ordenação ao escalar o worker | TRANSCRICAO | [09:13] Larissa |
+| RFC-ARQ-01 | docs/RFC.md | Decisão | Worker como segundo processo na mesma base de código e no mesmo banco | TRANSCRICAO | [09:11] Larissa |
+| RFC-ARQ-02 | docs/RFC.md | Decisão | Nenhuma infraestrutura nova; MySQL existente | TRANSCRICAO | [09:07] Diego |
+| RFC-ARQ-03 | docs/RFC.md | Restrição | Módulos e rotas seguem o padrão por domínio do projeto | CODIGO | src/routes/index.ts |
+| RFC-SEG-01 | docs/RFC.md | Restrição | Demais operações do CRUD para qualquer role autenticada por ora | TRANSCRICAO | [09:37] Sofia |
+| RFC-PASSO-01 | docs/RFC.md | Plano | Sessão de revisão do desenho com Bruno e Diego antes de codar | TRANSCRICAO | [09:50] Larissa |
+| RFC-PASSO-02 | docs/RFC.md | Plano | Ordem estimada de sprints: outbox e DLQ, worker e retry, CRUD e integração | TRANSCRICAO | [09:46] Larissa |
 | ADR-001 | docs/adrs/ADR-001-outbox-no-mysql.md | Decisão | Outbox no MySQL no mesmo commit do changeStatus | TRANSCRICAO | [09:08] Larissa |
 | ADR-001-SNAP | docs/adrs/ADR-001-outbox-no-mysql.md | Decisão | Payload gravado renderizado (snapshot) na inserção | TRANSCRICAO | [09:52] Larissa |
 | ADR-001-UUID | docs/adrs/ADR-001-outbox-no-mysql.md | Decisão | Chaves em UUID, padrão do projeto | TRANSCRICAO | [09:51] Larissa |
